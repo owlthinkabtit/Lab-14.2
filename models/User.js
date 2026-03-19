@@ -17,13 +17,19 @@ const userSchema = new Schema({
   password: {
     type: String,
     minlength: 5,
-    required: true
+    required: function() {
+      return !this.githubId
+    }
+  },
+  githubId: {
+    type: String,
+    unique: true
   }
 });
 
 // hash user password
 userSchema.pre("save", async function () {
-  if (this.isNew || this.isModified("password")) {
+  if (this.password && (this.isNew || this.isModified("password"))) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
