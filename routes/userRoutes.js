@@ -58,7 +58,7 @@ router.get(
     // We can now issue our own JWT to the user.
     const token = signToken(req.user);
     // Redirect the user to the frontend with the token, or send it in the response
-    res.redirect(`http://localhost:3001?token=${token}`);
+    res.redirect(`http://localhost:3000?token=${token}`);
   }
 );
 
